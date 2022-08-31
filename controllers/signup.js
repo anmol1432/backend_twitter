@@ -18,8 +18,11 @@ const signUp = async (req, res) => {
         }
         else {
             const newUser = new User({ name, email, password, confirmPassword, phone })
-            await newUser.save()
-            return res.status(200).json({ message: 'Success' })
+            await newUser.save().then(() => {
+                return res.status(200).json({ message: 'Successfully Registered' })
+            }).catch(err => {
+                return res.status(422).json({ error: 'Bad Request' })
+            })
         }
 
     } catch (error) {
