@@ -3,8 +3,7 @@ var jwt = require('jsonwebtoken');
 
 const signUp = async (req, res) => {
     try {
-        const { name, email, password, confirmPassword, phone } = req.body
-        const accessToken = jwt.sign({ username: 'sign in' }, process.env.JWT_SECRET_KEY);
+        const { name, email, password, confirmPassword, phone } = req.body 
         const user = await User.findOne({ email: email });
 
         if (!name || !email || !password || !confirmPassword || !phone) {
@@ -19,7 +18,9 @@ const signUp = async (req, res) => {
         else {
             const newUser = new User({ name, email, password, confirmPassword, phone })
             await newUser.save()
-            return res.status(200).json({ message: 'Success' })
+            const getUser = await User.findOne({ email: email, name: name });
+            const accessToken = await jwt.sign({ _id: getUser._id }, process.env.JWT_SECRET_KEY);
+            return res.status(200).json({ message: 'Success', token: accessToken, name, email, phone })
         }
 
     } catch (error) {

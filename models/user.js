@@ -28,15 +28,7 @@ const userSchema = new mongoose.Schema({
     created_at: {
         type: Date,
         default: Date.now
-    },
-    tokens: [
-        {
-            token:{
-                type: String,
-                required: true,
-            }
-        },
-    ]
+    }
 })
 
 userSchema.pre('save', async function (next) {
@@ -44,7 +36,7 @@ userSchema.pre('save', async function (next) {
         if (this.isModified('password')) {
             // Store hash in your password DB.
             this.password = await bcrypt.hashSync(this.password, salt);
-            this.confirm_password = await bcrypt.hashSync(this.confirm_password, salt);
+            this.confirm_password = await bcrypt.hashSync(this.confirmPassword, salt);
         }
         next()
     } catch (error) {
