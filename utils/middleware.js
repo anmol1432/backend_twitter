@@ -2,9 +2,16 @@
 var jwt = require('jsonwebtoken');
 
 module.exports = {
-    authenticate: function (req, res, next) {
-        const userInfo = jwt.verify(req.headers.authorization.split(' ')[1], process.env.JWT_SECRET_KEY);
-        console.log(userInfo);
-        next()
+    authenticate: async function (req, res, next) {
+        try {
+            const userInfo = jwt.verify(req.headers.authorization.split(' ')[1], process.env.JWT_SECRET_KEY);
+            if (userInfo) {
+                next()
+            } else {
+                res.status(400).json({ error: 'Credentials Not Match', status: 0 })
+            }
+        } catch (error) {
+            res.status(400).json({ error: 'Credentials Not Match', status: 0 })
+        }
     }
 }
