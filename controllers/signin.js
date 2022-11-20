@@ -13,7 +13,7 @@ const signIn = async (req, res) => {
             const passowrdMatch = await bcrypt.compare(password, user.password)
             if (user && passowrdMatch) {
                 const accessToken = await jwt.sign({ _id: user._id }, process.env.JWT_SECRET_KEY);
-                return res.status(200).json({ message: 'Success', token: accessToken })
+                return res.status(200).json({ message: 'Success', token: accessToken, status: '200' })
             }
             return res.status(422).json({ error: 'Credentials Not Match ' })
         }

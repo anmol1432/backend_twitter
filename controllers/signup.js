@@ -3,7 +3,7 @@ var jwt = require('jsonwebtoken');
 
 const signUp = async (req, res) => {
     try {
-        const { name, email, password, confirmPassword, phone } = req.body 
+        const { name, email, password, confirmPassword, phone } = req.body
         const user = await User.findOne({ email: email });
 
         if (!name || !email || !password || !confirmPassword || !phone) {
@@ -20,7 +20,11 @@ const signUp = async (req, res) => {
             await newUser.save()
             const getUser = await User.findOne({ email: email, name: name });
             const accessToken = await jwt.sign({ _id: getUser._id }, process.env.JWT_SECRET_KEY);
-            return res.status(200).json({ message: 'Success', token: accessToken, name, email, phone })
+            return res.status(200).json({
+                message: 'Success', token: accessToken, userInfo: {
+                    name, email, phone
+                }, status: '200'
+            })
         }
 
     } catch (error) {
