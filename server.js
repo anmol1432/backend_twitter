@@ -11,10 +11,6 @@ const createError = require('http-errors');
 app.use(cors())
 app.options('*', cors());
 app.use(express.json());
-// catch 404 and forward to error handler
-app.use((req, res, next) => {
-    next(createError.NotFound());
-});
 app.use(require('./routes/index'))
 
 
