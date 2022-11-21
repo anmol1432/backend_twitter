@@ -14,7 +14,6 @@ app.use(require('./routes/index'))
 mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true }).then(() => {
     console.log("MONGO DB CONNECTED");
 }).then(() => {
-    app.use(cors())
     app.listen(port, () => {
         console.log(`SERVER RUNNING :- http://localhost:${port}`)
     })
