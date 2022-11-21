@@ -7,6 +7,7 @@ const app = express()
 const port = process.env.PORT
 const db = process.env.DATABASE
 
+app.use(cors())
 app.use(express.json());
 app.use(require('./routes/index'))
 
