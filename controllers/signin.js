@@ -4,7 +4,7 @@ var jwt = require('jsonwebtoken');
 
 const signIn = async (req, res) => {
     try {
-        const { email, password } = req.body
+        const { email, password } = req.body.data
         if (!email || !password) {
             return res.status(400).json({ error: 'Bad Request' })
         }

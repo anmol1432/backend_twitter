@@ -8,10 +8,10 @@ module.exports = {
             if (userInfo) {
                 next()
             } else {
-                res.status(400).json({ error: 'Credentials Not Match', status: 0 })
+               return res.status(400).json({ error: 'Credentials Not Match', status: 0 })
             }
         } catch (error) {
-            res.status(400).json({ error: 'Credentials Not Match', status: 0 })
+            return res.status(400).json({ error: 'Credentials Not Match', status: 0 })
         }
     }
 }
