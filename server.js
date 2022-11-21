@@ -6,10 +6,17 @@ const mongoose = require('mongoose');
 const app = express()
 const port = process.env.PORT
 const db = process.env.DATABASE
+const createError = require('http-errors');
 
 app.use(cors())
+app.options('*', cors());
 app.use(express.json());
+// catch 404 and forward to error handler
+app.use((req, res, next) => {
+    next(createError.NotFound());
+});
 app.use(require('./routes/index'))
+
 
 mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true }).then(() => {
     console.log("MONGO DB CONNECTED");
@@ -21,4 +28,5 @@ mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true, useFindA
     console.log(error)
 })
 
+module.exports = app;
 
